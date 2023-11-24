@@ -1,13 +1,6 @@
 import '../font.css';
-import {
-  ReactElement,
-  ReactNode,
-  useState,
-  useEffect,
-  useCallback,
-} from 'react';
+import { ReactElement, ReactNode, useEffect } from 'react';
 import type { AppProps } from 'next/app';
-import Router from 'next/router';
 import 'aos/dist/aos.css';
 import type { NextPage } from 'next';
 import { Provider } from 'react-redux';
@@ -25,6 +18,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
+// eslint-disable-next-line import/order
 import useLoader from 'util/useLoader';
 
 type NextPageWithLayout = NextPage & {

@@ -72,6 +72,7 @@
     "@rtk-query/codegen-openapi": "^1.0.0",
     "@types/aos": "^3.0.4",
     "@types/bcrypt": "^5.0.0",
+    "@types/jest": "^29.5.10",
     "@types/react-gtm-module": "^2.0.1",
     "@types/react-numeric-input": "^2.2.4",
     "@types/react-redux": "^7.1.31",

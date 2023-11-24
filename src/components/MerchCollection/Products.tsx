@@ -30,7 +30,12 @@ const Products = ({
 }) => {
   return (
     <Box pt={{ base: 10, md: 60 }} pb={{ base: 10, md: 60 }} id="blogs">
-      <Flex justify={'space-around'} gap={20} align={'center'}>
+      <Flex
+        justify={'space-around'}
+        gap={20}
+        align={'center'}
+        data-testid="form__container"
+      >
         <Flex
           align="center"
           justify={'flex-end'}
