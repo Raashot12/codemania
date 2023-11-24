@@ -90,9 +90,6 @@ const Product = ({
   const [qty, setQty] = useState(1);
   const matches = useMediaQuery('(max-width: 1024px)');
   const router = useRouter();
-  const handleRouteToDetailedPage = (identifier: number) => {
-    router.push(`/merch-collection/item/${identifier}`);
-  };
 
   return (
     <>
@@ -105,7 +102,6 @@ const Product = ({
           alignItems: 'center',
           position: 'relative',
         }}
-        onClick={() => handleRouteToDetailedPage(id)}
       >
         <Box
           sx={{

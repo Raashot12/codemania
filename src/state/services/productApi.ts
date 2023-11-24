@@ -20,7 +20,9 @@ interface ProductList {
   skip: number;
   limit: number;
 }
-
+export type ApiServicesAppGetProductByIdArg = {
+  id?: number;
+};
 const injectedRtkApi = api.injectEndpoints({
   endpoints: (build) => ({
     apiServicesAppProductGet: build.query<ProductList, unknown>({
@@ -29,8 +31,19 @@ const injectedRtkApi = api.injectEndpoints({
         method: 'GET',
       }),
     }),
+    apiServicesAppGetProductById: build.query<
+      ProductList,
+      ApiServicesAppGetProductByIdArg
+    >({
+      query: (queryArg) => ({
+        url: `/product/${queryArg.id}`,
+        method: 'GET',
+      }),
+    }),
   }),
-  overrideExisting: true,
 });
 
-export const { useApiServicesAppProductGetQuery } = injectedRtkApi;
+export const {
+  useApiServicesAppProductGetQuery,
+  useLazyApiServicesAppGetProductByIdQuery,
+} = injectedRtkApi;
