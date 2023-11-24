@@ -1,31 +1,29 @@
-# Girls4Leadership Web app
+# Jack&June
 
-Project is built with [nextjs](https://nextjs.org/docs), with [redux](https://redux.js.org/api/api-reference) for state management and [mantine](https://mantine.dev/pages/basics/) as the component libary.
+## A functional frontend project written with NextJS 13.4, Typescript and MantineUI!
 
-To run the development server:
+Jack&June is a detailed shop for men and women fashion.
 
+In this app, a user can:
 
+- See all products available for sale
+- Access detailed page for selected products
 
+## How to install this app
 
-```bash
-npm run dev
-# or
-yarn dev
-``` 
+- Clone this project
+- Run npm install
+- Run npm run dev
 
-Open [http://localhost:4200](http://localhost:4200) with your browser to see the result.
+## How to tweak this project for your own use
 
+I'd say clone and rename this project for your own purposes.
 
+## Find a bug?
 
+If you found an issue or would like to submit an improvement to this project, please submit an issue using the Issues tab above. If you would like to submit a PR with a fix, reference the issue you created.
 
+## Known issues (Work in progress)
 
-
-
-
-
-
-
-
-
-
-
+- After a user selects a color for product and use the next or previous button, same image re-appears.
+  These are coming soon!
