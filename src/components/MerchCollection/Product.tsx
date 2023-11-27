@@ -102,6 +102,7 @@ const Product = ({
           alignItems: 'center',
           position: 'relative',
         }}
+        onClick={() => router.push(`/products/${id}`)}
       >
         <Box
           sx={{

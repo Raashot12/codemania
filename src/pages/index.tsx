@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react/jsx-no-undef */
 /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -25,12 +26,14 @@ import Accessories from 'components/MerchCollection/Accessories';
 import MerchCollectionBlog from 'components/MerchCollection/MerchCollectionBlog';
 import {
   Product,
+  ProductList,
   useApiServicesAppProductGetQuery,
 } from 'state/services/productApi';
 import { IconAlertCircle } from '@tabler/icons';
 import { useMediaQuery } from '@mantine/hooks';
 import { usePagination } from 'hooks/usePagination';
 import Pagination from 'components/Pagination';
+import { GetServerSideProps } from 'next';
 
 const MerchCollectionPage = () => {
   const { data, isLoading, isError, refetch } =
@@ -152,5 +155,15 @@ const MerchCollectionPage = () => {
     </Layout>
   );
 };
-
+export const getServerSideProps: GetServerSideProps<any> = async () => {
+  // Fetch data from your API endpoint
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_APP_API_SERVICE_BASE_URL}/products`
+  );
+  const productsData: ProductList = await res.json();
+  const { products } = productsData;
+  return {
+    props: { products },
+  };
+};
 export default MerchCollectionPage;

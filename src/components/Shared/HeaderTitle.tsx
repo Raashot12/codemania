@@ -8,7 +8,7 @@ type HeadTitleProps = {
 const HeadTitle = ({ title }: HeadTitleProps) => {
   return (
     <Head>
-      <title>{`Girls4Leadership - ${title}`}</title>
+      <title>{`Jack&June - ${title}`}</title>
     </Head>
   );
 };

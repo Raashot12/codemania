@@ -26,6 +26,5 @@ export const validateForErrors = (
     errors.email = 'Invalid email format';
   }
   setErrorsState(errors);
-  console.log(errors);
   return errors;
 };

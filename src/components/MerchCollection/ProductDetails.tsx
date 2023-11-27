@@ -20,68 +20,46 @@ import {
   Grid,
   Text,
   Rating,
-  TextInput,
   Button,
   createStyles,
-  List,
   Flex,
   Input,
 } from '@mantine/core';
-import { IconCheck, IconCircleCheck, IconHeart } from '@tabler/icons';
-import { useRouter } from 'next/router';
-import { featured } from 'components/staticData/Feature';
+import { IconCircleCheck, IconHeart } from '@tabler/icons';
 import Image from 'next/image';
 import { WrapperBox } from 'styles';
 
-const Product = (): JSX.Element => {
-  const router = useRouter();
+type ProductDeatils = {
+  id: number;
+  title: string;
+  description: string;
+  price: number;
+  discountPercentage: number;
+  rating: number;
+  stock: number;
+  brand: string;
+  category: string;
+  thumbnail: string;
+  images: string[];
+};
+
+const Product = ({
+  title,
+  images,
+  category,
+  description,
+  rating,
+  price,
+}: ProductDeatils): JSX.Element => {
   const { classes } = useStyles();
   const [thumbsSwiper, setThumbsSwiper] = useState<any>();
-  const [swiper, setSwiper] = useState<any>(null);
-  const [selectedColourIndex, setSelectedColourIndex] = useState<number | null>(
-    null
-  );
   const [qty, setQty] = useState<number>(1);
-  const productItem = featured.find(
-    (item) => item.id === Number(router.query.id)
-  );
   const [swiperItems, setSwiperItems] = useState<string[]>([]);
 
   useEffect(() => {
-    if (productItem?.bgImg) {
-      setSwiperItems(productItem.bgImg);
-    }
-  }, [productItem]);
+    setSwiperItems(images);
+  }, []);
 
-  useEffect(() => {
-    if (selectedColourIndex !== null) {
-      swiper && swiper.slideTo?.(0);
-    }
-  }, [swiperItems]);
-
-  const handleSelectColor = (idx: number) => {
-    setSelectedColourIndex(idx === selectedColourIndex ? null : idx);
-  };
-
-  useEffect(() => {
-    if (selectedColourIndex !== null) {
-      const selectedColor =
-        productItem?.color && productItem?.color[selectedColourIndex];
-      const selectedColorImg = selectedColor?.image[0];
-      setSwiperItems([
-        selectedColorImg!!,
-        ...productItem?.bgImg?.filter((item) => item !== selectedColorImg)!!,
-      ]);
-    }
-  }, [selectedColourIndex]);
-
-  if (!productItem) {
-    return (
-      <Text ta={'center'} fw={500}>
-        Product not found
-      </Text>
-    );
-  }
   return (
     <WrapperBox sx={{ background: '#fff' }}>
       <Container size="xl">
@@ -95,7 +73,6 @@ const Product = (): JSX.Element => {
         >
           <Grid.Col md={6}>
             <Swiper
-              onSwiper={setSwiper}
               spaceBetween={10}
               navigation
               thumbs={{
@@ -146,19 +123,16 @@ const Product = (): JSX.Element => {
             }}
           >
             <Text className={classes.home}>Home</Text>
-            <Text className={classes.title}>{productItem?.name}</Text>
-            <Text sx={{ fontSize: '25px' }}>${productItem?.amount}</Text>
+            <Text className={classes.title}>{title}</Text>
+            <Text sx={{ fontSize: '25px' }}>${price}</Text>
             <Box className={classes.stockWrap}>
               <Box className={classes.stockSub}>
                 <IconCircleCheck style={{ color: '#8aba56' }} />
                 <Text sx={{ color: '#c1cad1' }}>In Stock</Text>
               </Box>
               <Box className={classes.ratings}>
-                {productItem?.ratings === 0 ? (
-                  ''
-                ) : (
-                  <Rating value={productItem?.ratings} />
-                )}
+                <Rating value={rating} />
+
                 <Text>(1) Write a Review?</Text>
               </Box>
             </Box>
@@ -168,50 +142,8 @@ const Product = (): JSX.Element => {
               piece. Team it with a pair of heels or boots and minimal
               accessories for a sassy look.
             </Box>
-            {productItem.color && (
-              <>
-                <Text sx={{ padding: '25px 0 15px' }}>Color</Text>
-                <Box sx={{ display: 'flex', columnGap: '10px' }}>
-                  {productItem.color &&
-                    productItem.color.map((item, index) => (
-                      <Box
-                        key={index}
-                        onClick={() => {
-                          handleSelectColor(index);
-                        }}
-                        className={classes.colorBox}
-                        sx={{
-                          border: `${
-                            item.type === 'white' ? '1px solid #c1cad1' : 'none'
-                          }`,
-                          backgroundColor: `${item.type}`,
-                        }}
-                      >
-                        {index === selectedColourIndex ? (
-                          <>
-                            {item.type === 'white' ? (
-                              <IconCheck
-                                color="#c1cad1"
-                                size={17}
-                                strokeWidth={3}
-                              />
-                            ) : (
-                              <IconCheck
-                                color="#fff"
-                                size={17}
-                                strokeWidth={3}
-                              />
-                            )}
-                          </>
-                        ) : (
-                          ''
-                        )}
-                      </Box>
-                    ))}
-                </Box>
-              </>
-            )}
-            <Text sx={{ padding: '20px 0' }}>Size</Text>
+
+            {/* <Text sx={{ padding: '20px 0' }}>Size</Text>
             <Box sx={{ display: 'flex', columnGap: '20px' }}>
               {productItem?.size.map((item) => (
                 <TextInput
@@ -221,7 +153,7 @@ const Product = (): JSX.Element => {
                   className={classes.sizeBox}
                 />
               ))}
-            </Box>
+            </Box> */}
             <Box sx={{ padding: '10px 0' }}>
               <Text sx={{ padding: '20px 0' }}>Qty</Text>
               <Flex align={'center'}>
@@ -290,71 +222,14 @@ const Product = (): JSX.Element => {
                 <Box
                   sx={{ display: 'flex', columnGap: '10px', cursor: 'pointer' }}
                 >
-                  {productItem.modalCategories.map((modalCategory) => (
-                    <Text key={modalCategory}>{modalCategory}</Text>
-                  ))}
-                </Box>
-              </Flex>
-
-              <Flex sx={{ alignItems: 'center' }} columnGap={15}>
-                <Box component="span" fw={500}>
-                  Tags:
-                </Box>
-                <Box sx={{ display: 'flex', columnGap: '10px' }}>
-                  {productItem.tags.map((label) => (
-                    <Text
-                      key={label}
-                      sx={{
-                        padding: '7px 14px',
-                        width: 'fit-content',
-                        borderRadius: '25px',
-                        cursor: 'pointer',
-                        color: '#8b99a3',
-                        background: '#F2F4F6',
-                        ':hover': {
-                          background: '#8b99a3',
-                          transition: 'all ease-in-out 0.5s',
-                          color: 'white',
-                        },
-                      }}
-                    >
-                      {label}
-                    </Text>
-                  ))}
+                  <Text>{category}</Text>
                 </Box>
               </Flex>
             </Flex>
           </Grid.Col>
         </Grid>
         <Text className={classes.titles}>DESCRIPTION</Text>
-        <Text className={classes.texts}>
-          Basics never wear out of fashion. You can team your basics with
-          literally everything. They can carry any look with ease. Pair it with
-          a blazer and a jean to give it that not-so-formal yet casual look,
-          with a pair of 3/4ths or chinos and uber cool loafer, it gives you fun
-          outing look.
-        </Text>
-        <Text className={classes.content}>
-          The premium knits Dresses from Zara are made of 100% combed cotton.
-          Pre-shrunk to let you worry less about shrinkage. This amazing skirt
-          is sure to make you stand out from the crowd. Team it up with a solid
-          crop top and wedge heels or casual shoes for a sassy look.
-        </Text>
-        <List withPadding listStyleType="disc" className={classes.content}>
-          <List.Item>Stonewashed</List.Item>
-          <List.Item>2-pocket design</List.Item>
-          <List.Item>Mid-rise</List.Item>
-          <List.Item>Cotton spandex fabric</List.Item>
-        </List>
-        <Text className={classes.titles}>PRODUCT DETAILS</Text>
-        <Text className={classes.content}>
-          Mustard brown woven A-line midi skirt, has two pockets, a full button
-          placket with a button closure on the front, and a waistband with belt
-          loops and gathers beneath Comes with a matching fabric belt
-        </Text>
-        <Text className={classes.titles}>MATERIAL & CARE</Text>
-        <Text className={classes.content}>100% Cotton</Text>
-        <Text className={classes.content}>Machine-wash cold</Text>
+        <Text className={classes.texts}>{description}</Text>
       </Container>
     </WrapperBox>
   );

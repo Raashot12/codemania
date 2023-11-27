@@ -14,7 +14,7 @@ export interface Product {
   images: string[];
 }
 
-interface ProductList {
+export interface ProductList {
   products: Product[];
   total: number;
   skip: number;
@@ -27,7 +27,7 @@ const injectedRtkApi = api.injectEndpoints({
   endpoints: (build) => ({
     apiServicesAppProductGet: build.query<ProductList, unknown>({
       query: () => ({
-        url: `/product`,
+        url: `/products`,
         method: 'GET',
       }),
     }),
@@ -36,7 +36,7 @@ const injectedRtkApi = api.injectEndpoints({
       ApiServicesAppGetProductByIdArg
     >({
       query: (queryArg) => ({
-        url: `/product/${queryArg.id}`,
+        url: `/products/${queryArg.id}`,
         method: 'GET',
       }),
     }),

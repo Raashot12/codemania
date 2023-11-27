@@ -1,6 +1,6 @@
 # Jack&June
 
-## A functional frontend project written with NextJS 13.4, Typescript and MantineUI!
+## A functional frontend project written with NextJS 14, Typescript and MantineUI!
 
 Jack&June is a detailed shop for men and women fashion.
 
